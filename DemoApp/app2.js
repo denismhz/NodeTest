@@ -14,10 +14,12 @@ app.get("/speak/:animal", function(req, res){
 		res.send("The dog says 'Woof'");
 });
 
-app.get("/repeat/:this/:times", function(req, res){
+app.get("/repeat/:thiss/:times", function(req, res){
+	var text = "";
 	for(var i = 0; i < Number(req.params.times); i++){
-		res.send(req.params.this + " ");
+		text += req.params.thiss + " ";
 	}
+	res.send(text);
 });
 
 app.get("*", function(req, res){
