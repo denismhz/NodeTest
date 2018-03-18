@@ -6,12 +6,21 @@ app.get("/", function(req, res){
 });
 
 app.get("/speak/:animal", function(req, res){
-	if(req.params.animal === "pig")
+	var sounds = {
+		pig: "Oink",
+		dog: "woof",
+		cow: "MeOw"
+	}
+
+	var animal = req.params.animal.toLowerCase();
+	var sound = sounds[animal];
+	res.send("The " + animal + " says '" + sound + "'");
+	/*if(req.params.animal === "pig")
 		res.send("The pig says 'Oink'");
 	else if(req.params.animal === "cow")
 		res.send("The cow says 'Moo'");
 	else if(req.params.animal === "dog")
-		res.send("The dog says 'Woof'");
+		res.send("The dog says 'Woof'");*/
 });
 
 app.get("/repeat/:thiss/:times", function(req, res){
