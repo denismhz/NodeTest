@@ -1,0 +1,9 @@
+<h1>The post page</h1>
+
+<% for(var i = 0; i < posts.length; i++){ %>
+	<li><%= posts[i].title %> - author: <strong><%= posts[i].author %></strong></li>	
+<% } %>
+<br>
+<% posts.foreach(function(posts){
+	<li><%= posts.title %> - author: <strong><%= posts.author %></strong></li>
+<% }); %>

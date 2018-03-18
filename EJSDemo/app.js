@@ -11,6 +11,16 @@ app.get('/fallinlovewith/:thing', function(req, res){
 	res.render("lopve.ejs", {thingVar: thing});
 });
 
+app.get("/posts", function(req, res){
+	var posts = [
+		{title: "post 1", author: "susy"},
+		{title: "jajdjdjdeidia", author: "dandy"},
+		{title: "adddd", author: "serverd"},
+	]
+
+	res.render("posts.ejs", {posts:posts});
+});
+
 app.listen(3000, function(){
 	console.log("server started port 3000");
 });
