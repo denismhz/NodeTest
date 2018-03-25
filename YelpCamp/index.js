@@ -1,7 +1,9 @@
-var express = require("express");
-var app = express();
+var express 	= require("express"),
+    app 	= express(),
+    mongoose 	= require("mongoose"),
+    bodyParser 	= require("body-parser");
 
-var bodyParser = require("body-parser");
+mongoose.connect("mongodb://localhost/yelp_camp");
 
 var campgrounds = [
 		{name:"Salmon Creek", image: "https://www.alaskacenters.gov/sites/alaskacenters.gov/files/sunset-trees-400_1.jpg"},
