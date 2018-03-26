@@ -1,0 +1,24 @@
+<h1>Edit page</h1>
+
+<% include ./partials/header.ejs %>
+<div class ="ui main text container segment">
+	<div class="ui huge header">Edit <%= blog.title %></div>
+	<form class="ui form" method="POST" action="/blogs/<%= blog._id %>?_method=PUT">
+		<div class="field">
+			<label>Title</label>
+			<input value="<%= blog.title %>" type="text" name="blog[title]" placeholder="title">
+		</div>
+		<div class="field">
+			<label>Image</label>
+			<input value="<%= blog.image %>" type="text" name="blog[image]" placeholder="image">
+		</div>
+		<div class="field">
+			<label>Blog Content</label>
+			<textarea name="blog[body]"><%= blog.body %></textarea>
+		</div>
+		<input class="ui violet big basic button" type="submit">
+	</form>
+</div>
+<% include ./partials/footer.ejs %>
+
+

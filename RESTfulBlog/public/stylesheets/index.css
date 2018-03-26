@@ -1,0 +1,14 @@
+i.icon, i.icons {
+	font-size: 1.5em;
+	font-weight: 100;
+	color: white;
+}
+
+.container.main {
+	margin-top: 7em;
+	margin-bottom: 7em;
+}
+
+#delete {
+	display: inline;
+}
