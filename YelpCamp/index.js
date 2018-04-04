@@ -7,6 +7,7 @@ var express 	= require("express"),
     bodyParser 	= require("body-parser"),
     Campground 	= require("./models/campground"),
     Comment	= require("./models/comment"),
+    methodOverride=require("method-override"),
     seedDB	= require("./seeds");
 
 var commentRoutes       = require("./routes/comments"),
@@ -17,8 +18,8 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 	
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
-
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 //seedDB();
 
 app.use(require("express-session")({
