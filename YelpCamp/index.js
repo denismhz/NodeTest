@@ -1,5 +1,6 @@
 var express 	= require("express"),
     app 	= express(),
+    flash       = require("connect-flash"),
     passport    = require("passport"),
     LocalStrategy=require("passport-local"),
     User        = require("./models/user"),
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
+app.use(flash());
 //seedDB();
 
 app.use(require("express-session")({
@@ -43,13 +45,6 @@ app.use(function(req, res, next){
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/", indexRoutes);
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 app.listen(3000, function(){
 	console.log("yelp camp server started");
