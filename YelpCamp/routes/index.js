@@ -8,24 +8,25 @@ router.get("/", function(req, res){
 });
 
 router.get("/register", function(req, res){
-    res.render("register");
+    res.render("register", {page: 'register'});
 });
 
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username});
     User.register(newUser, req.body.password, function(err, user){
         if(err){
-            console.log("107" + err);
-            return res.render("register");
+            console.log("107" + err.message);
+            return res.render("register", {error: err.message});
         }
         passport.authenticate("local")(req, res, function(){
+            req.flash("success", "Welcome to YelpCamp " + user.username);
             res.redirect("/campgrounds");
         });
     });
 });
 
 router.get("/login", function(req, res){
-    res.render("login", {message: req.flash("error"));
+    res.render("login", {page: 'login'});
 });
 
 router.post("/login", passport.authenticate("local",
@@ -36,14 +37,8 @@ router.post("/login", passport.authenticate("local",
 
 router.get("/logout", function(req, res){
     req.logout();
+    req.flash("success", "Logged you out!");
     res.redirect("/campgrounds");
 });
-
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
-        return next();
-    }
-    res.redirect("/login");
-}
 
 module.exports = router;

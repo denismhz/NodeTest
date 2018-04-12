@@ -6,19 +6,20 @@ var middleware = require("../middleware");
 router.get("/", function(req, res){
 	Campground.find({}, function(err, allCampgrounds){
 		if(err){ console.loge(err);}
-		else{ res.render("campgrounds/campgrounds",{campgrounds:allCampgrounds});}
+		else{ res.render("campgrounds/campgrounds",{campgrounds:allCampgrounds, page:"campgrounds"});}
 	});
 });
 
 router.post("/", middleware.isLoggedIn, function(req, res){
 	var name = req.body.name;
+        var price = req.body.price;
 	var image = req.body.image;
 	var desc = req.body.description;
         var author = {
             id: req.user._id,
             username: req.user.username
         }
-	var newCampground = {name: name, image:image, description:desc, author:author};
+	var newCampground = {name: name, image:image, description:desc, author:author, price:price};
 	Campground.create(newCampground, function(err, newlyCreated){
 		if(err){
 			console.log(err);
@@ -54,8 +55,10 @@ router.get("/new", middleware.isLoggedIn, function(req, res){
 
 router.get("/:id", function(req, res){
 	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
-		if(err){
-			console.log(err);
+		if(err || !foundCampground){
+                    req.flash("error", "Campground not found!");
+                    res.redirect("/campgrounds");
+		    console.log(err);
 		}else{
 			res.render("campgrounds/show", {campground: foundCampground});
 		}
