@@ -15,10 +15,25 @@ var options = {
 var geocoder = NodeGeocoder(options);
 
 router.get("/", function(req, res){
+    if(req.query.search){
+        const regex = new RegExp(escapeRegex(req.query.search), "gi");
+
+	Campground.find({name: regex}, function(err, allCampgrounds){
+		if(err){ console.loge(err);}
+		else{         
+                    if(allCampgrounds.length < 1){
+                        req.flash("error", "No campgrounds match that query, please try again.");
+                        res.redirect("/campgrounds");
+                    } else {
+                    res.render("campgrounds/campgrounds",{campgrounds:allCampgrounds, page:"campgrounds"});}
+                }
+	});
+    } else {
 	Campground.find({}, function(err, allCampgrounds){
 		if(err){ console.loge(err);}
 		else{ res.render("campgrounds/campgrounds",{campgrounds:allCampgrounds, page:"campgrounds"});}
 	});
+    }
 });
 
 //CREATE - add new campground to DB
@@ -105,5 +120,9 @@ router.get("/:id", function(req, res){
 		}
 	});
 });
+
+function escapeRegex(text){
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 
 module.exports= router;

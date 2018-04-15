@@ -5,6 +5,14 @@
         <p>
         <a class="btn btn-primary btn large" href="campgrounds/new">Create a new campground</a>
         </p>
+        <p>
+            <form action="/campgrounds" method="GET" class="form-inline">
+                <div class="form-group">
+                    <input type="text" name ="search" placeholder="Campground search..." class="form-control">
+                    <input type="submit" value="search" class="btn btn-default">
+                </div>
+            </form>
+        </p>
 </header>
 
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
