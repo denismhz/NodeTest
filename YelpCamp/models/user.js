@@ -7,6 +7,7 @@ var userSchema = mongoose.Schema({
     avatar:String,
     firstName:String,
     lastName:String,
+    bio:{type:String, default:"Tell someting about you."},
     email:{type: String, unique: true, required: true},
     resetPasswordToken:String,
     resetPasswordExpires:Date,

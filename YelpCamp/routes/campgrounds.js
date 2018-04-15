@@ -4,7 +4,6 @@ var Campground = require("../models/campground");
 var middleware = require("../middleware");
 
 var NodeGeocoder = require('node-geocoder');
-console.log(process.env.GEOCODER_API_KEY);
 var options = {
   provider: 'google',
   httpAdapter: 'https',

@@ -71,6 +71,37 @@ router.get("/users/:id", function(req, res){
     });
 });
 
+router.get("/users/:id/edit", function(req, res){
+    User.findById(req.params.id, function(err, user){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        }
+        Campground.find().where("author.id").equals(user._id).exec(function(err, campgrounds){
+            if(err){
+                req.flash("error", err);
+                res.redirect("/");
+            }
+            res.render("users/update", {user:user, campgrounds: campgrounds});
+        }); 
+    });
+});
+
+router.put("/users/:id", function(req, res){
+    console.log(req.params.user);
+    console.log(req.body.user);
+    User.findByIdAndUpdate(req.params.id, req.body.user, function(err, user){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            console.log(req.body.user);
+            req.flash("success", "Updated Profile");
+            res.redirect("/users/" + user._id);
+        }
+    });
+});
+
 router.get("/forgot", function(req, res){
     res.render("forgot");
 });
@@ -102,7 +133,7 @@ router.post('/forgot', function(req, res, next) {
       var smtpTransport = nodemailer.createTransport({
         service: 'Gmail', 
         auth: {
-          user: 'denis.m.xd@gmail.com',
+          user: 'denismanherz@gmail.com',
           pass: process.env.GMAILPW
         }
       });
@@ -166,7 +197,7 @@ router.post('/reset/:token', function(req, res) {
       var smtpTransport = nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-          user: 'denis.m.xd@gmail.com',
+          user: 'denismanherz@gmail.com',
           pass: process.env.GMAILPW
         }
       });

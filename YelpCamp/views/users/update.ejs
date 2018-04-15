@@ -1,0 +1,32 @@
+<% include ../partials/header.ejs %>
+    <div class="row">
+        <div class="col-md-4">
+            <form action="/users/<%= user._id %>?_method=PUT" method="POST">
+                
+                <div class="thumbnail">
+                    <div class="form-group">
+                        <input class="form-control" value="<%= user.firstName %>" name="user[firstName]">
+                        <input class="form-control" value="<%= user.lastName %>" name="user[lastName]">
+                        <img src="<%= user.avatar %>">
+                            <input class="form-control" value="<%= user.avatar %>" name="user[avatar]">
+                        <div class="caption">
+                            <input class="form-control" value="<%= user.email %>" name="user[email]">
+                        </div>
+                    </div>
+                </div>
+                <p><textarea class="form-control" rows="10" cols="50" name=user[bio]><%= user.bio %></textarea></p>
+                <button class="btn btn-success" href="/users/<%= user.id %>">Save Changes</button>
+            </form>
+        </div>
+        <div class="col-md-8">
+            <h3><%= user.username %>'s campgrounds: </h3>
+            <ul>
+                <% campgrounds.forEach(function(campground){ %>
+                    <li><a href="/campgrounds/<%=campground.id%>"><%= campground.name %></a></li>
+                <% }); %>
+            </ul>
+        </div>
+    </div>
+
+    
+<% include ../partials/footer.ejs %>
