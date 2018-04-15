@@ -4,6 +4,7 @@ var passport = require("passport");
 var User = require("../models/user");
 var Campground = require("../models/campground");
 var async = require("async");
+var middleware = require("../middleware");
 var nodemailer = require("nodemailer");
 var crypto = require("crypto");
 
@@ -71,7 +72,7 @@ router.get("/users/:id", function(req, res){
     });
 });
 
-router.get("/users/:id/edit", function(req, res){
+router.get("/users/:id/edit", middleware.checkIfCurrentUser, function(req, res){
     User.findById(req.params.id, function(err, user){
         if(err){
             req.flash("error", err.message);
@@ -82,12 +83,12 @@ router.get("/users/:id/edit", function(req, res){
                 req.flash("error", err);
                 res.redirect("/");
             }
-            res.render("users/update", {user:user, campgrounds: campgrounds});
+            res.render("users/update", {user:user, currentUser:req.params.user, campgrounds: campgrounds});
         }); 
     });
 });
 
-router.put("/users/:id", function(req, res){
+router.put("/users/:id", middleware.checkIfCurrentUser, function(req, res){
     console.log(req.params.user);
     console.log(req.body.user);
     User.findByIdAndUpdate(req.params.id, req.body.user, function(err, user){

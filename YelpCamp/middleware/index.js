@@ -1,4 +1,5 @@
 var Campground = require("../models/campground");
+var User = require("../models/user");
 var Comment = require("../models/comment");
 var middlewareObj = {};
 
@@ -15,7 +16,7 @@ middlewareObj.checkCampgroundOwnerShip =
                     if(campground.author.id.equals(req.user._id) || req.user.isAdmin){
                         next();
                     } else {
-                        res.send("back");
+                        res.redirect("back");
                     }
                 }
             });
@@ -38,6 +39,26 @@ middlewareObj.checkCommentOwnerShip =
                         next();
                     } else{
                         req.flash("error", "You don't have permission to do that!");
+                        res.redirect("back");
+                    }
+                }
+            });
+        } else {
+            req.flash("error", "Login first!");
+            res.redirect("back");
+        }
+    }
+
+middlewareObj.checkIfCurrentUser =
+    function(req, res, next){
+        if(req.isAuthenticated()){
+            User.findById(req.params.id, function(err, user){
+                if(err){
+                    req.flash("error", err.message);
+                } else {
+                    if(user._id.equals(req.params.id) || req.user.isAdmin) {
+                        next();
+                    } else {
                         res.redirect("back");
                     }
                 }

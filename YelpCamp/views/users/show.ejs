@@ -9,7 +9,9 @@
                 </div>
             </div>
         <p><%= user.bio %></p>
-        <a class="btn btn-warning" href="/users/<%= user.id %>/edit">Edit Profile</a>
+        <% if(currentUser && user._id.equals(currentUser._id)){ %>
+            <a class="btn btn-warning" href="/users/<%= user.id %>/edit">Edit Profile</a>
+        <%}%>
         </div>
         <div class="col-md-8">
             <h3><%= user.username %>'s campgrounds: </h3>
