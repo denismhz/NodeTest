@@ -52,20 +52,15 @@ middlewareObj.checkCommentOwnerShip =
 middlewareObj.checkIfCurrentUser =
     function(req, res, next){
         if(req.isAuthenticated()){
-            User.findById(req.params.id, function(err, user){
-                if(err){
-                    req.flash("error", err.message);
-                } else {
-                    if(user._id.equals(req.params.id) || req.user.isAdmin) {
-                        next();
-                    } else {
-                        res.redirect("back");
-                    }
-                }
-            });
+            if(req.user._id.equals(req.params.id)){
+                next();
+            } else {
+                req.flash("error", "You don't have permission to do that!");
+                res.redirect("/users/" + req.params.id);
+            }
         } else {
             req.flash("error", "Login first!");
-            res.redirect("back");
+            res.redirect("/login");
         }
     }
 
