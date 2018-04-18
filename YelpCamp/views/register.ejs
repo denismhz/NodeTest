@@ -21,7 +21,9 @@
                 <input class="form-control" type="email" name="email" placeholder="Email">
             </div>
             <div class="form-group">
-                <input class="form-control" type="text" name="avatar" placeholder="Avatar URL">
+                <label for="images">Profile Picture</label>
+                <input class="form-control" type="text" name="avatar" id="images" pattern="^https:\/\/images\.unsplash\.com\/.*" title="Only images from images.unsplash.com allowed. See link below for instructions." placeholder="https://images.unsplash.com/..." required>
+                <small>Click <a target="_blank" href="https://unsplash.com/search/profilepicture">here</a> to go to unsplash.com</small>
             </div>
             <!--<div class="form-group">
                 <input class="form-control" type="password" name="adminCode" placeholder="Admin code">
