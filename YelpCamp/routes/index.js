@@ -45,7 +45,9 @@ router.get("/login", function(req, res){
 
 router.post("/login", passport.authenticate("local",
     {   successRedirect: "/campgrounds",
-        failureRedirect: "/login"
+        failureRedirect: "/login",
+        failureFlash: true,
+        successFlash: "Welcome to YelpCamp!"
     }), function(req, res) {
 });
 
@@ -89,8 +91,8 @@ router.get("/users/:id/edit", middleware.checkIfCurrentUser, function(req, res){
 });
 
 router.put("/users/:id", middleware.checkIfCurrentUser, function(req, res){
-    console.log(req.params.user);
-    console.log(req.body.user);
+    //console.log(req.params.user);
+    //console.log(req.body.user);
     User.findByIdAndUpdate(req.params.id, req.body.user, function(err, user){
         if(err){
             req.flash("error", err.message);

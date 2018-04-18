@@ -18,7 +18,7 @@ router.post("/", middleware.isLoggedIn, function(req, res){
 	Campground.findById(req.params.id, function(err, campground){
 		if(err)res.redirect("/campgrounds");
 		else {
-			console.log(req.body.comment);
+			//console.log(req.body.comment);
 			Comment.create(req.body.comment, function(err, comment){
                             if(err){
                                 console.log(error);
@@ -54,7 +54,7 @@ router.get("/:comment_id/edit", middleware.checkCommentOwnerShip, function(req, 
 });
 
 router.put("/:comment_id", function(req, res) {
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){a
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
         if(err){
             res.redirect("back");
         }
