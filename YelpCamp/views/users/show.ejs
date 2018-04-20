@@ -4,19 +4,19 @@
         <div class="col-md-4">
             <h1><%= user.firstName + " " + user.lastName %></h1>
             <div class="collapse multi-collapse" id="name">
-                <input class="form-control" form="userEdit" id="firstName" type="text" name=user[firstName] placeholder="New first Name">
-                <input class="form-control" form="userEdit" id="lastName" type="text" name=user[lastName] placeholder="New last Name">
+                <input class="form-control" form="userEdit" id="firstName" type="text" value="<%= user.firstName %>" name=user[firstName] placeholder="New first Name">
+                <input class="form-control" form="userEdit" id="lastName" type="text" value="<%= user.lastName %>" name=user[lastName] placeholder="New last Name">
             </div>
             <div class="card mb-4" style="border-radius: 5%">
                 <img style="width: 100%; border-radius: 5%; border-bottom-left-radius:0%; border-bottom-right-radius:0%" src="<%= user.avatar %>">
                 <div class="collapse multi-collapse" id="image">
-                    <input class="form-control" id="image" form="userEdit" name="user[avatar]" pattern="^https:\/\/images\.unsplash\.com\/.*" title="Only images from images.unsplash.com allowed." placeholder="https://images.unsplash.com/..." required>
+                    <input class="form-control" id="image" form="userEdit" name="user[avatar]" value="<%= user.avatar %>" pattern="^https:\/\/images\.unsplash\.com\/.*" title="Only images from images.unsplash.com allowed." placeholder="https://images.unsplash.com/..." required>
                     <small class="ml-1">Click <a target="_blank" href="https://unsplash.com/search/profilepicture">here</a> to go to unsplash.com</small>
                 </div>
                 <div class="card-body">
                     <a class="card-link" href="mailto:<%= user.email %>"><%= user.email %></a>
                     <div class="collapse multi-collapse" id="email">
-                        <input class="form-control" form="userEdit" id="email" type="email" name=user[email] placeholder="New E-Mail">
+                        <input class="form-control" form="userEdit" id="email" type="email" name=user[email] value="<%= user.email %>" placeholder="New E-Mail">
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                         <div class="collapse multi-collapse" id="bio">
                             <div class="form-group">
                                 <form id="userEdit" action="/users/<%= user._id %>?_method=PUT" method="POST">
-                                    <textarea class="form-control mb-2" name=user[bio]>New Bio</textarea>
+                                    <textarea class="form-control mb-2" name=user[bio]><%= user.bio %></textarea>
                                     <button class="btn btn-success btn-sm mb-2" form="userEdit">Submit Changes</button>
                                     <a class="btn btn-light btn-sm float-right" href="/users/<%= user._id %>">Cancel</a>
                                 </form>
