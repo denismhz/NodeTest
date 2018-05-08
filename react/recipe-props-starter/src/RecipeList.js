@@ -4,27 +4,15 @@ import Recipe from "./Recipe";
 import PropTypes from "prop-types";
 
 class RecipeList extends Component{
-    static defaultProps = {
-        recipes: [
-            {title: "kakakaak", ingredients: ["flour", "water"],
-                image: "https://www.gutekueche.at/img/rezept/35771/spaghetti-mit-fleischsauce.jpg",
-                instructions: "mix ingredients"},
-            {title: "kakakaak", ingredients: ["flour", "water"],
-                image: "https://www.gutekueche.at/img/rezept/35771/spaghetti-mit-fleischsauce.jpg",
-                instructions: "mix ingredients"},
-            {title: "kakakaak", ingredients: ["flour", "water"],
-                image: "https://www.gutekueche.at/img/rezept/35771/spaghetti-mit-fleischsauce.jpg",
-                instructions: "mix ingredients"}
-        ]
-    }
-
     static propTypes = {
-        recipes: PropTypes.arrayOf(PropTypes.object).isRequired
+      recipes: PropTypes.arrayOf(PropTypes.object).isRequired,
+      onDelete: PropTypes.func.isRequired
     }
 
-    render(){
+  render(){
+      const {onDelete} = this.props;
         const recipes = this.props.recipes.map((r,index) => (
-            <Recipe key={index} {...r} />
+            <Recipe key={r.id} {...r} onDelete={onDelete} />
         ));
         return(<div className="recipe-list">
                     {recipes}
