@@ -17,8 +17,9 @@ export function authUser(type, userData) {
         .then(({ token, ...user }) => {
           localStorage.setItem("jwtToken", token);
           dispatch(setCurrentUser(user));
-          dispatch(removeError());
           console.log(user);
+          console.log('from API');
+          dispatch(removeError());
           resolve(); // indicate that the API call succeeded
         })
         .catch(err => {
@@ -27,4 +28,11 @@ export function authUser(type, userData) {
         });
     });
   };
+}
+
+export function logout(){
+  return dispatch => {
+    localStorage.clear();
+    dispatch(setCurrentUser({}));
+  }
 }
