@@ -4,23 +4,27 @@ import {connect} from "react-redux";
 import Homepage from "../components/Homepage";
 import AuthForm from "../components/AuthForm";
 import {authUser} from "../store/actions/auth";
+import {removeError} from '../store/actions/errors';
+import MessageForm from '../containers/MessageForm';
+import withAuth from '../hocs/withAuth';
 
 const Main = props => {
-  const {authUser, errors} = props;
+  const {authUser, errors, removeError, currentUser} = props;
   return(
     <div className="container">
       <Switch>
-        <Route exact path="/" render={props => <Homepage {...props} />} />
+        <Route exact path="/" render={props => <Homepage currentUser={currentUser} {...props} />} />
         <Route exact path="/signin" render={props => {
           return(
-            <AuthForm errors={errors} onAuth={authUser} buttonText="Log in" heading="welcome back." {...props} />
+            <AuthForm removeError={removeError} errors={errors}  onAuth={authUser} buttonText="Log in" heading="welcome back." {...props} />
             )
         }}/>
         <Route exact path="/signup" render={props => {
           return(
-            <AuthForm errors= {errors} signUp onAuth={authUser} buttonText="Sign Up" heading="Join warbler bra" {...props} />
+            <AuthForm removeError={removeError} errors= {errors}  signUp onAuth={authUser} buttonText="Sign Up" heading="Join warbler bra" {...props} />
             )
         }}/>
+        <Route path='/users/:id/messages/new' component={MessageForm} />
       </Switch>
     </div>
     );
@@ -33,4 +37,4 @@ function mapStateToProps(state){
   };
 }
 
-export default withRouter(connect(mapStateToProps, {authUser})(Main));
+export default withRouter(connect(mapStateToProps, {authUser, removeError})(Main));
