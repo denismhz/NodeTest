@@ -1,41 +1,33 @@
 require("dotenv").load();
-const jwt = require("jsonwebtoken");
+var jwt = require("jsonwebtoken");
 
-//make sure the user is logged - Authentication
-exports.loginRequired = function(req, res, next){
+exports.loginRequired = function(req, res, next) {
   try {
-    const token = req.headers.authorization.split(" ")[1]; //Bearrer token
+    const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
-      if(decoded) {
-        return next();
+      if (decoded) {
+        next();
       } else {
-        return next({
-          status: 401,
-          message: "please login first"
-        });
+        return next({ status: 401, message: "Please Log In First" });
       }
     });
-  } catch(e) {
-    return next({status: 401, message:"Plese loin first"});
+  } catch (e) {
+    return next({ status: 401, message: "Please Log In First" });
   }
-}
+};
 
-//make sure we geht teh correct user - Authorization
-exports.ensureCorrectUser = function(req, res, next){
+exports.ensureCorrectUser = function(req, res, next) {
   try {
-    const token = req.header.authorization.split(" ")[1];
-    jwt.verify(token, process.env.SECRET_KEY, function(err, decoded){
-      if(decoded && decoded.id === req.params.id){
+    const token = req.headers.authorization.split(" ")[1];
+    jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
+      if (decoded && decoded.id === req.params.id) {
         return next();
       } else {
-        return next({
-          status: 401,
-          message: "Unauthorized"
-        });
+        return next({ status: 401, message: "Unauthorized" });
       }
     });
-  } catch(e){
-    return next({status: 401, message:"unauthorizued"});
+  } catch (e) {
+    return next({ status: 401, message: "Unauthorized" });
   }
 };
 
