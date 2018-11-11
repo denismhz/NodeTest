@@ -19,23 +19,25 @@ exports.createMessage = async function(req, res, next) {
   }
 };
 
-//GET /pi/users/:id/messages/:message_id
+// GET - /api/users/:id/messages/:message_id
 exports.getMessage = async function(req, res, next) {
   try {
     let message = await db.Message.find(req.params.message_id);
     return res.status(200).json(message);
-  } catch (e){
-    return next(e);
+  } catch (err) {
+    return next(err);
   }
-}
+};
 
-//DELETE /api/users/:id/messages/:message_id
+// DELETE /api/users/:id/messages/:message_id
 exports.deleteMessage = async function(req, res, next) {
   try {
-    let message = await db.Message.findById(req.params.message_id);
-    await message.remove();
-    return res.status(200).json(message);
-  } catch (e){
-    return next(e);
+    let foundMessage = await db.Message.findById(req.params.message_id);
+    await foundMessage.remove();
+
+    return res.status(200).json(foundMessage);
+  } catch (err) {
+    return next(err);
   }
-}
+};
+

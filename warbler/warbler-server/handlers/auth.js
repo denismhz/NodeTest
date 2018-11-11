@@ -31,7 +31,7 @@ exports.signin = async function(req, res, next) {
       });
     }
   } catch (e) {
-    return next({ status: 400, message: e.message });
+    return next({ status: 400, message: "Invalid Email/Password." });
   }
 };
 
@@ -63,3 +63,4 @@ exports.signup = async function(req, res, next) {
     });
   }
 };
+
